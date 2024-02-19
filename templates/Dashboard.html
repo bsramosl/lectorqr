@@ -1,0 +1,225 @@
+{% extends "layouts/Base.html" %}
+{% load static %}
+
+{% block title %}
+ 
+
+{% endblock %}
+
+
+{% block css %} 
+
+ 
+{% endblock %}
+
+{% block contentheader %}   
+						<div class="page-title-breadcrumb">
+							<div class=" pull-left">
+								<div class="page-title">Dashboard</div>
+							</div>
+							<ol class="breadcrumb page-breadcrumb pull-right">
+								<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
+										href="{% url 'Qr:Inicio' %}">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
+								</li>
+								<li class="active">Dashboard</li>
+							</ol>
+						</div>
+{% endblock %}
+
+{% block content %}  
+<div class="state-overview">
+    <div class="row">
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="info-box bg-b-green">
+                <span class="info-box-icon push-bottom"><i data-feather="truck"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Total Vehiculos Registrados</span>
+ 
+               <div id="current_date"></p></div>
+                <script>
+                    date = new Date();
+                    year = date.getFullYear();
+                    month = date.getMonth() + 1;
+                    day = date.getDate();
+                    document.getElementById("current_date").innerHTML = month + "/" + day + "/" + year;
+                    </script>
+                    <span class="info-box-number">{{tuser}}</span> 
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="info-box bg-b-yellow">
+                <span class="info-box-icon push-bottom"><i data-feather="user"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Total Registro Ingresos</span>
+                    <span class="info-box-number">{{ingreso}}</span>  
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="info-box bg-b-blue">
+                <span class="info-box-icon push-bottom"><i data-feather="book"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Total Registro Salida</span>
+                    <span class="info-box-number">{{sal}}</span>                     
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="info-box bg-b-pink">
+                <span class="info-box-icon push-bottom"><i data-feather="users"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Visitantes</span>
+                    <span class="info-box-number">{{visitante}}</span><span> </span>
+                     
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    </div>
+</div>
+
+<div class="row"> 
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-6">
+        <div class="card">
+            <div class="card-head">
+                <header>Igreso de Vehiculos</header> 
+            </div>
+            <div class="card-body">
+                <div class="recent-report__chart">
+                    <div id="chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+        <div class="card-box">
+            <div class="card-head">
+                <header>Registros Recientes </header>  
+            </div>
+            <div class="card-body ">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr> 
+                                <th>Nombre</th>
+                                <th>Status</th>  
+                            </tr>
+                            
+                                {% for list in userc %}
+                                <tr> 
+                                <td>{{list.first_name}} {{list.last_name}}</td>
+                                {% if list.estado == "Entrada"%}
+                                <td><i class="fas fa-circle col-green me-2"></i>{{list.estado}}</td>
+                                {% else %}
+                                <td><i class="fas fa-circle col-red me-2"></i>{{list.estado}}</td>
+
+                                {% endif %}
+                                  
+                                </tr>
+                                {% endfor %}          
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="box-title"><small class="pull-right small-lbl-green"><i
+                            class="far fa-arrow-alt-circle-up"></i> </small>Estado de Usuarios</div>
+                <div class="mt-3">
+                    <div class="stat-item">
+                        <div class="h6">Entrada</div> <b>{{entrada}}%</b>
+                    </div>
+                    <div class="stat-item">
+                        <div class="h6">Salida</div> <b>{{salida}}%</b>
+                    </div>
+                </div>
+                <div id="schart3">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block extrajs %}
+ 
+	<!--apex chart-->
+	<script src="{% static 'dashboard/plugins/apexcharts/apexcharts.min.js'%}"></script>
+	<!-- Page Specific JS File -->
+	<script>
+     dat={{tabla | safe }}
+     dia=[]
+     can=[] 
+     for (item of dat) {     
+        dia.push(item.dia)
+        can.push(item.dat)
+     }
+     console.log(dia)
+     console.log(can)
+ 
+    
+    var options = {
+        series: [{
+        name: 'Vehiculos por Dia',
+        data: can
+      }],
+        chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: dia,
+      },
+      yaxis: {
+        title: {
+          text: 'Usuarios Ingresados'
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return "Total: " + val 
+          }
+        }
+      }
+      };
+
+      var chart = new ApexCharts(document.querySelector("#chart"), options);
+      chart.render();
+</script>
+ 
+{% endblock extrajs %}

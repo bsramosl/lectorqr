@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-      "whitenoise.middleware.WhiteNoiseMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -106,11 +106,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
-USE_I18N = True
+USE_I18N = True 
 
 USE_L10N = True
 
@@ -128,6 +128,19 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+LOGOUT_REDIRECT_URL = '/Login/'
+LOGIN_URL = '/Login/'
+
+AUTH_USER_MODEL = 'PrincipalApp.PersonaModel'
+
+
+
+EMAIL_USE_TLS= True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'epizap@unemi.edu.ec'
+EMAIL_HOST_PASSWORD = 'nwnfifbvzzcletwt'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

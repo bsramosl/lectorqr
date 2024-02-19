@@ -1,0 +1,54 @@
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Listar</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="modal-body">
+                <div class="card-body">
+                    <table id="ads" class="table table-striped custom-table table-hover">
+                        <thead>
+                            <tr>  
+                                <th>Fecha</th>
+                                <th>Vehiculo</th>   
+                                <th>Placa</th>   
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>     
+                            {% for list in rec %}
+                            <tr>                                  
+                                <td>{{list.fecha_entrada}}</td>
+                                <td>{{list.vehiculo.modelo}}</td> 
+                                <td>{{list.vehiculo.placa}}</td>                               
+                                <td>{{list.estado}}</td>
+                            </tr>  
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                  </div> 
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button onclick="cerrar_modal();"  type="button" class="btn btn-default" >Cancelar</button> 
+            </div>  
+        </form> 
+    </div>
+</div>
+
+
+
+<script type="application/javascript">
+    $(function () {
+        $('#ads').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json',
+            },
+            responsive: true,
+            autoWidth: false
+        });
+    });  
+     
+  </script>  

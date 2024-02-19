@@ -1,0 +1,82 @@
+{% extends "layouts/Base.html" %}
+{% load static %}
+
+{% block title %}
+  
+
+{% endblock %}
+
+
+{% block css %} 
+ 
+{% endblock %}
+ 
+
+{% block content %} 
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card card-box">
+            <div class="card-head">
+                <header>Invitado</header> 
+            </div>
+            <div class="card-body" id="bar-parent">
+                <form method="post" class="form-horizontal"  enctype="multipart/form-data">
+                    <div class="form-body">
+                        {% csrf_token %}
+                        {{form.as_p}}
+
+                        <div class="card-head">
+                            <header>Vehiculo</header> 
+                        </div>
+
+                        {{question.as_p}}
+                      
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="offset-md-3 col-md-9">
+                                    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 m-r-20 btn-circle btn-primary">Submit<span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+                                    <a href="{% url list %}" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-b-10 btn-circle btn-danger">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 
+
+{% endblock %}
+
+
+{% block extrajs %} 
+
+
+{% for message in messages %}
+
+    <link href="{% static 'sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'sweetalert2/sweetalert2.min.js' %}"></script>
+
+    <script type="text/javascript">
+        if ('{{ message.tags }}' == 'error') {
+
+            Swal.fire({
+                icon: 'error',
+             
+                html: '{{ message }}',
+            });
+        }
+
+        if ('{{ message.tags }}' == 'success') {
+            Swal.fire({
+                icon: 'success',
+               
+                html: '{{ message }}',
+            });
+        }
+    </script>
+{% endfor %}
+ 
+ 
+{% endblock extrajs %}

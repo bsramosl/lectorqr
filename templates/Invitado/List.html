@@ -1,0 +1,131 @@
+{% extends "layouts/Base.html" %}
+{% load static %}
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+
+{% block css %} 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css"/>
+{% endblock %}
+ 
+
+ 
+        
+
+{% block content %}  
+    <section class="content">
+      <div class="container-fluid"> 
+        <div class="row">
+            <div class="col-md-12">
+                     <div class="card">
+              <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-6">
+                        <div class="btn-group">
+                            <a href="{% url creates %}" class="btn btn-primary" >
+                                Agregar Nuevo <i class="fa fa-plus"></i></a>
+                        </div>
+                    </div>
+                </div> 
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="tablelist" class="table table-striped custom-table table-hover">
+                    <thead>
+                        <tr> 
+                            <th>Nombre</th> 
+                            <th>Apellido</th>        
+                            <th>Vehiculo</th> 
+                            <th>Placa</th> 
+                            <th>Entrada</th> 
+                            <th>Salida</th>    
+                            <th>Observaciones</th> 
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        {% for list in reg %}
+                        {% if list.tipousuario == 2 %}
+                        <tr>
+                            <td>{{list.first_name}}</td>
+                            <td>{{list.last_name}}</td>  
+                            <td>{{list.marca}}</td> 
+                            <td>{{list.placa}}</td> 
+
+                            {% if list.estado == "Entrada" %}
+                                 <td class="label-sm label-success">{{list.fecha_entrada}}</td>                                                          
+                                {% else %}
+                                <td>{{list.fecha_entrada}}</td>                                 
+                            {% endif %} 
+
+                            {% if list.estado == "Salida" %}
+                            <td class="label-sm label-danger">{{list.fecha_salida}}</td>                                                          
+                           {% else %}
+                           <td>{{list.fecha_salida}}</td>                                 
+                       {% endif %}  
+                            <td>{{list.observacion}}</td> 
+
+                            <td>
+                                {% if list.estado == "Entrada" %}
+                                                         
+                                {% else %}
+                                <a onclick="abrir_modal('{% url entrada list.ultimo.id %}')" class="btn btn-success btn-xs">
+                                    <i class="fa fa-check"></i>
+                                </a>
+                                {% endif %} 
+                                <a onclick="abrir_modal('{% url update list.id %}')" class="btn btn-primary btn-xs">
+                                    <i class="fa fa-book"></i>
+                                </a>
+                                {% if list.estado != "Salida" %}
+                                <a onclick="abrir_modal('{% url salida list.ultimo.id %}')" class="btn btn-danger btn-xs">
+                                    <i class="fa fa-window-close-o"></i>
+                                </a>
+                                {% endif %}   
+                                
+                                
+                                
+                            </td>
+                        </tr> 
+                        {% endif %}
+                        {% endfor %} 
+                    </tbody>
+                </table>
+              </div> 
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>  
+
+<div class="modal fade" id="modal">
+
+</div>
+ 
+
+{% endblock %}
+
+
+{% block extrajs %} 
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
+<script src="{% static 'modal.js'%}"></script>
+
+
+<script type="application/javascript">
+  $(function () {
+      $('#tablelist').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json',
+        },
+          responsive: true,
+          autoWidth: false
+      });
+  }); 
+ 
+   
+</script>  
+ 
+{% endblock extrajs %}
+
+ 
+ 

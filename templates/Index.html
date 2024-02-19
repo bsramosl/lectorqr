@@ -2,14 +2,26 @@
 {% load static %}
 
 {% block title %}
- 
 
 {% endblock %}
 
-
 {% block css %} 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css"/>
 
- 
+{% endblock %}
+
+{% block contentheader %}   
+						<div class="page-title-breadcrumb">
+							<div class=" pull-left">
+								<div class="page-title">Inicio</div>
+							</div>
+							<ol class="breadcrumb page-breadcrumb pull-right">
+								<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
+										href="{% url 'Qr:Inicio' %}">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
+								</li>
+								<li class="active">Inicio</li>
+							</ol>
+						</div>
 {% endblock %}
 
 {% block content %}  
@@ -17,21 +29,38 @@
 <div class="faq-area py-120">
     <div class="container">
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <h1></h1>
             <table>
                 <tr>
                     <td width="50%">
-                        <img src="http://127.0.0.1:8000/Index/" style="width:1200px;" />
+                        <img src="http://127.0.0.1:8000/Index/" style="width:300px;" />
                     </td>
-                    <td width="50%">
-            
+                    <td width="50%">            
                     </td>
                 </tr>
             </table>
         </div>
-        <div class="col-lg-6">
-       
+        <div class="col-lg-7">
+          <table  id="tablausuario" class="table table-striped custom-table table-hover">
+            <thead>
+                <tr> 
+                    <th>Name</th> 
+                    <th>Estado</th>                           
+                    <th>Hora</th>
+                </tr>
+            </thead>
+            <tbody>  
+
+              {% for list in persona %}
+              <tr>
+                  <td>{{list.first_name}} {{list.last_name}}</td>
+                  <td >{{list.estado}}</td>        
+                  <td>{{list.fecha.fecha_entrada}}</td>  
+              </tr>               
+              {% endfor %} 
+            </tbody> 
+            </table>
         </div>
       </div>
     </div>
@@ -40,9 +69,57 @@
 
 {% endblock %}
 
-
 {% block extrajs %} 
- 
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
+<script>
+
+  $(function () {
+    $('#tablausuario').DataTable({
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json',
+    },
+        responsive: true,
+        autoWidth: false
+    });
+}); 
+/*-------------------------  
+var $ = jQuery.noConflict(); 
+
+let identificadorIntervaloDeTiempo;
+
+$(document).ready(function () {
+  identificadorIntervaloDeTiempo = setInterval(listar, 2000); 
+});
 
  
+
+
+function listar(){ 
+$.ajax({
+  url:  "/Iniciolista/",
+  type: 'get', 
+  dataType: 'json', 
+}).done(function (data) {
+  if ($.fn.DataTable.isDataTable('#tablausuario')) {
+    $('#tablausuario').DataTable().destroy();
+ }
+ $('#tablausuario tbody').html(""); 
+            for (let i = 0; i < data.length; i++) {
+                let fila = '<tr>';   
+                fila += '<td  >' + data[i].first_name  + data[i].last_name + '</td>>';
+                fila += '<td  >' + data[i].estado + '</td>>';
+                fila += '<td  >' + data[i].fecha + '</td>>';
+                fila += '</tr>';
+                $('#tablausuario tbody').append(fila);
+            } 
+}).fail(function (jqXHR, textStatus, errorThrown) {
+  console.log(textStatus + ': ' + errorThrown);
+}).always(function (data) {
+}); 
+}
+---------------------------*/
+
+</script>
+  
 {% endblock extrajs %}

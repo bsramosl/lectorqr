@@ -1,0 +1,21 @@
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Eliminar</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+        </div>
+        <form action="{% url delete object.pk %}" method="post">
+            {% csrf_token %}
+            <div class="modal-body">
+                <h4>Eliminar <span class="text-purple">{{object.first_name}}  {{object.last_name}}</span></h4> </h4> 
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button onclick="cerrar_modal();"  type="button" class="btn btn-default" >Cancelar</button>
+                <button class="btn btn-info">
+                    Aceptar
+                </button>
+            </div>  
+        </form> 
+    </div>
+</div>

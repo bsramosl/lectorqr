@@ -1,0 +1,30 @@
+{% load static %}
+
+{% for message in messages %}
+
+    <link href="{% static 'dashboard/plugins/sweet-alert/sweetalert2.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'dashboard/plugins/sweet-alert/sweetalert2.min.js' %}"></script>
+
+    <script type="text/javascript">
+        if ('{{ message.tags }}' == 'error') {
+
+            Swal.fire({
+                icon: 'error',
+                title: '{{ message.tags}}',
+                html: '{{ message }}',
+
+            });
+        }
+
+        if ('{{ message.tags }}' == 'success') {
+            Swal.fire({
+                icon: 'success',
+                title: '{{ message.tags}}',
+                html: '{{ message }}',
+
+            });
+        }
+
+    </script>
+
+{% endfor %}

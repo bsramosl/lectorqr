@@ -1,0 +1,104 @@
+{% extends "layouts/Base.html" %}
+{% load static %}
+
+{% block title %}
+ 
+
+{% endblock %}
+
+
+{% block css %} 
+
+ 
+{% endblock %}
+
+{% block contentheader %}   
+						<div class="page-title-breadcrumb">
+							<div class=" pull-left">
+								<div class="page-title">Informe</div>
+							</div>
+							<ol class="breadcrumb page-breadcrumb pull-right">
+								<li><i class="fa fa-home"></i>&nbsp;<a class="parent-item"
+										href="{% url 'Qr:Inicio' %}">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
+								</li>
+								<li class="active">Informe</li>
+							</ol>
+						</div>
+{% endblock %}
+
+{% block content %} 
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="card card-box">
+                    <div class="card-head">
+                        <header>Informe</header> 
+                    </div>
+                    <div class="card-body" id="bar-parent">
+                         
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="row m-b-20">
+                                <div class="col-sm-12">
+                                    <h3 class="title">Enviar Reporte</h3>                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Contact form -->
+                                <div class="col-sm-6">
+                                    <form  method="POST" class="contact-form" enctype="multipart/form-data" >
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <input class="form-control" id="name" name="name" placeholder="Your name" type="text" value="" required="">
+                                        </div>
+                                        <!-- /Form-name -->
+                                        <div class="form-group">
+                                            <input class="form-control" id="email" name="email" type="email" placeholder="Your email" value="" required="">
+                                        </div>
+                                        <!-- /Form-email -->
+                                        <div class="form-group">
+                                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Message" required=""></textarea>
+                                        </div> 
+                                        <div class="form-group">
+                                            <input class="form-control" id="pdf" name="pdf" type="file"></input>
+                                        </div> 
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="">
+                                                    <button type="submit" class="btn btn-primary waves-effect waves-light" id="send">Submit</button>
+                                                </div>
+                                            </div> <!-- /col -->
+                                        </div> <!-- /row -->
+                                    </form> <!-- /form -->
+                                </div> <!-- end col -->
+                                <div class="col-sm-4 col-sm-offset-1">
+                                    <div class="contact-box">
+                                        <div class="contact-detail">
+                                            <i class="fa fa-map-marker"></i>
+                                            <span id ="fechoy">
+                                                 
+                                            </span>
+                                        </div> 
+                                    </div>
+                                </div> <!-- end col -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+    </div><!-- /.container-fluid -->
+  </section>
+ 
+{% endblock %}
+
+
+{% block extrajs %} 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+ 
+ 
+{% endblock extrajs %}
